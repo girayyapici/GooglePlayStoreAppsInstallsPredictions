@@ -26,11 +26,11 @@ import numpy as np
 
 st.header("Google Play Store Apps Installs Predictions")
 st.text_input("Enter your Name: ", key="name")
-df_ = pd.read_csv("googleplaystore.csv")
+df_ = pd.read_csv("https://github.com/girayyapici/GooglePlayStoreAppsInstallsPredictions/blob/485cf5bf90ca36a84fd7cecd68317f1bf152c667/googleplaystore.csv")
 df=df_.copy()
 
-#encoder = LabelEncoder()
-#encoder.classes_ = np.load('classes.npy', allow_pickle=True)
+encoder = LabelEncoder()
+encoder.classes_ = np.load('classes.npy', allow_pickle=True)
 
 if st.checkbox('Show dataframe'):
     df
@@ -90,7 +90,7 @@ df['Content_Rating'] = le.fit_transform(df['Content_Rating'])
 le = preprocessing.LabelEncoder()
 df['Type'] = le.fit_transform(df['Type'])
 
-df.describe().T
+#df.describe().T
 
 # load model
 best_xgboost_model = xgb.XGBRegressor()
