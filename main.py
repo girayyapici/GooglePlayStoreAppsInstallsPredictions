@@ -31,10 +31,6 @@ df=df_.copy()
 #encoder = LabelEncoder()
 #encoder.classes_ = np.load('classes.npy', allow_pickle=True)
 
-# load model
-best_xgboost_model = xgb.XGBRegressor()
-best_xgboost_model.load_model("best_model.json")
-
 if st.checkbox('Show dataframe'):
     df
 
@@ -93,6 +89,9 @@ df['Content_Rating'] = le.fit_transform(df['Content_Rating'])
 le = preprocessing.LabelEncoder()
 df['Type'] = le.fit_transform(df['Type'])
 
+# load model
+best_xgboost_model = xgb.XGBRegressor()
+best_xgboost_model.load_model("best_model.json")
 
 input_Size = st.slider('Size', 0.0, max(df["Size"]), 1.0)
 input_Type = st.slider('Type', 0.0, max(df["Type"]), 1.0)
