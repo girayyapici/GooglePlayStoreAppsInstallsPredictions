@@ -64,7 +64,7 @@ pd.set_option('display.width', 500)
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
 
 df_ = pd.read_csv("Proje/googleplaystore.csv")
-df=df_.copy()
+df = df_.copy()
 
 ####
 # Data Cleaning
@@ -89,22 +89,22 @@ df[~df.Reviews.str.isnumeric()]
 df=df.drop(df.index[10472])
 df.Reviews=pd.to_numeric(df.Reviews)
 
-print("Range: ", df.Rating.min(),"-",df.Rating.max())
+print("Range: ", df.Rating.min(), "-", df.Rating.max())
 df.Rating.dtype
-print(df.Rating.isna().sum(),"null values out of", len(df.Rating))
+print(df.Rating.isna().sum(), "null values out of", len(df.Rating))
 
 df.Price.unique()
-df.Price=df.Price.apply(lambda x: x.strip('$'))
-df.Price=pd.to_numeric(df.Price)
+df.Price = df.Price.apply(lambda x: x.strip('$'))
+df.Price = pd.to_numeric(df.Price)
 
 sep = ';'
 rest = df.Genres.apply(lambda x: x.split(sep)[0])
-df['Pri_Genres']=rest
+df['Pri_Genres'] = rest
 df.Pri_Genres.head()
 
 rest = df.Genres.apply(lambda x: x.split(sep)[-1])
 rest.unique()
-df['Sec_Genres']=rest
+df['Sec_Genres'] = rest
 df.Sec_Genres.head()
 
 df["Rating"] = df["Rating"].fillna(df.groupby("Pri_Genres")["Rating"].transform("mean"))
@@ -130,7 +130,7 @@ df['Installs_qcut'] = le.fit_transform(df['Installs_qcut'])
 df.isnull().sum()
 df.describe().T
 
-features = ['App', 'Reviews', 'Size', 'Rating', 'Type', 'Price', 'Content_Rating', 'Pri_Genres']
+features = ['Reviews', 'Size', 'Rating', 'Type', 'Price', 'Content_Rating', 'Pri_Genres']
 X = df[features]
 y = df['Installs']
 ####
@@ -143,7 +143,7 @@ model_list = ["Decision_Tree", "Random_Forest", "XGboost_Regressor"]
 result_scores = []
 for model in model_list:
     score = models_score(model, x_train, y_train, x_test, y_test)
-    result_scores.append((model, score[0], score[1],score[2]))
+    result_scores.append((model, score[0], score[1], score[2]))
     print(model, score)
 
 df_result_scores = pd.DataFrame(result_scores, columns=["model", "mse", "mae", "r2score"])
@@ -175,7 +175,7 @@ trials = Trials()
 best = fmin(fn=hyperparameter_tuning,
             space=space,
             algo=tpe.suggest,
-            max_evals=200,
+            max_evals=20,
             trials=trials)
 
 print(best)
