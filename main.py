@@ -90,8 +90,8 @@ le = preprocessing.LabelEncoder()
 df['Type'] = le.fit_transform(df['Type'])
 
 # load model
-best_xgboost_model = xgb.XGBRegressor()
-best_xgboost_model.load_model("best_model.json")
+#best_xgboost_model = xgb.XGBRegressor()
+#best_xgboost_model.load_model("best_model.json")
 
 input_Size = st.slider('Size', 0.0, max(df["Size"]), 1.0)
 input_Type = st.slider('Type', 0.0, max(df["Type"]), 1.0)
