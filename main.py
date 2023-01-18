@@ -35,63 +35,6 @@ encoder.classes_ = np.load('classes.npy', allow_pickle=True)
 if st.checkbox('Show dataframe'):
     df
 
-df.columns = df.columns.str.replace(' ', '_')
-
-df.Size=df.Size.str.replace('k','e+3')
-df.Size=df.Size.str.replace('M','e+6')
-
-df.Size=df.Size.replace('Varies with device',np.nan)
-df.Size=df.Size.replace('1,000+',1000)
-df.Size=pd.to_numeric(df.Size)
-
-df.Installs=df.Installs.apply(lambda x: x.strip('+'))
-df.Installs=df.Installs.apply(lambda x: x.replace(',',''))
-df.Installs=df.Installs.replace('Free',np.nan)
-df.Installs.str.isnumeric().sum()
-df.Installs=pd.to_numeric(df.Installs)
-
-df.Reviews.str.isnumeric().sum()
-df[~df.Reviews.str.isnumeric()]
-df=df.drop(df.index[10472])
-df.Reviews=pd.to_numeric(df.Reviews)
-
-print("Range: ", df.Rating.min(), "-", df.Rating.max())
-df.Rating.dtype
-print(df.Rating.isna().sum(), "null values out of", len(df.Rating))
-
-df.Price.unique()
-df.Price = df.Price.apply(lambda x: x.strip('$'))
-df.Price = pd.to_numeric(df.Price)
-
-sep = ';'
-rest = df.Genres.apply(lambda x: x.split(sep)[0])
-df['Pri_Genres'] = rest
-df.Pri_Genres.head()
-
-rest = df.Genres.apply(lambda x: x.split(sep)[-1])
-rest.unique()
-df['Sec_Genres'] = rest
-df.Sec_Genres.head()
-
-df["Rating"] = df["Rating"].fillna(df.groupby("Pri_Genres")["Rating"].transform("mean"))
-df["Size"] = df["Size"].fillna(df.groupby("Pri_Genres")["Size"].transform("mean"))
-
-le = preprocessing.LabelEncoder()
-df['App'] = le.fit_transform(df['App'])
-
-le = preprocessing.LabelEncoder()
-df['Pri_Genres'] = le.fit_transform(df['Pri_Genres'])
-
-le = preprocessing.LabelEncoder()
-df['Content_Rating'] = le.fit_transform(df['Content_Rating'])
-
-#df['Type'] = pd.get_dummies(df['Type']) kontrol edilecek
-
-le = preprocessing.LabelEncoder()
-df['Type'] = le.fit_transform(df['Type'])
-
-#df.describe().T
-
 # load model
 best_xgboost_model = xgb.XGBRegressor()
 best_xgboost_model.load_model("best_model.json")
