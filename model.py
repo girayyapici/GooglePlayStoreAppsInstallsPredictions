@@ -63,71 +63,7 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 500)
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
 
-df_ = pd.read_csv("googleplaystore.csv")
-df = df_.copy()
-
-####
-# Data Cleaning
-####
-df.columns = df.columns.str.replace(' ', '_')
-
-df.Size=df.Size.str.replace('k','e+3')
-df.Size=df.Size.str.replace('M','e+6')
-
-df.Size=df.Size.replace('Varies with device',np.nan)
-df.Size=df.Size.replace('1,000+',1000)
-df.Size=pd.to_numeric(df.Size)
-
-df.Installs=df.Installs.apply(lambda x: x.strip('+'))
-df.Installs=df.Installs.apply(lambda x: x.replace(',',''))
-df.Installs=df.Installs.replace('Free',np.nan)
-df.Installs.str.isnumeric().sum()
-df.Installs=pd.to_numeric(df.Installs)
-
-df.Reviews.str.isnumeric().sum()
-df[~df.Reviews.str.isnumeric()]
-df=df.drop(df.index[10472])
-df.Reviews=pd.to_numeric(df.Reviews)
-
-print("Range: ", df.Rating.min(), "-", df.Rating.max())
-df.Rating.dtype
-print(df.Rating.isna().sum(), "null values out of", len(df.Rating))
-
-df.Price.unique()
-df.Price = df.Price.apply(lambda x: x.strip('$'))
-df.Price = pd.to_numeric(df.Price)
-
-sep = ';'
-rest = df.Genres.apply(lambda x: x.split(sep)[0])
-df['Pri_Genres'] = rest
-df.Pri_Genres.head()
-
-rest = df.Genres.apply(lambda x: x.split(sep)[-1])
-rest.unique()
-df['Sec_Genres'] = rest
-df.Sec_Genres.head()
-
-df["Rating"] = df["Rating"].fillna(df.groupby("Pri_Genres")["Rating"].transform("mean"))
-df["Size"] = df["Size"].fillna(df.groupby("Pri_Genres")["Size"].transform("mean"))
-
-le = preprocessing.LabelEncoder()
-df['App'] = le.fit_transform(df['App'])
-
-le = preprocessing.LabelEncoder()
-df['Pri_Genres'] = le.fit_transform(df['Pri_Genres'])
-
-le = preprocessing.LabelEncoder()
-df['Content_Rating'] = le.fit_transform(df['Content_Rating'])
-
-#df['Type'] = pd.get_dummies(df['Type']) kontrol edilecek
-
-le = preprocessing.LabelEncoder()
-df['Type'] = le.fit_transform(df['Type'])
-
-df["Installs_qcut"] = pd.cut(df["Installs"], [0, 10000, 1000000, 5000000, 1000000000], labels=[1, 2, 3, 4])
-le = preprocessing.LabelEncoder()
-df['Installs_qcut'] = le.fit_transform(df['Installs_qcut'])
-
+df = pd.read_csv("googleplaystore1.csv")
 
 features = ['Reviews', 'Size', 'Rating', 'Type', 'Price', 'Content_Rating', 'Pri_Genres']
 X = df[features]

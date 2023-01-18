@@ -30,8 +30,8 @@ def evaluation_model(pred, y_val):
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 500)
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
-df_ = pd.read_csv("googleplaystore.csv")
-df=df_.copy()
+df = pd.read_csv("googleplaystore1.csv")
+
 
 
 le = preprocessing.LabelEncoder()
