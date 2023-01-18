@@ -50,16 +50,6 @@ df.Installs=df.Installs.replace('Free',np.nan)
 df.Installs.str.isnumeric().sum()
 df.Installs=pd.to_numeric(df.Installs)
 
-df.Reviews.str.isnumeric().sum()
-df[~df.Reviews.str.isnumeric()]
-df=df.drop(df.index[10472])
-df.Reviews=pd.to_numeric(df.Reviews)
-
-#print("Range: ", df.Rating.min(), "-", df.Rating.max())
-#df.Rating.dtype
-#print(df.Rating.isna().sum(), "null values out of", len(df.Rating))
-
-df.Price.unique()
 df.Price = df.Price.apply(lambda x: x.strip('$'))
 df.Price = pd.to_numeric(df.Price)
 
@@ -67,11 +57,6 @@ sep = ';'
 rest = df.Genres.apply(lambda x: x.split(sep)[0])
 df['Pri_Genres'] = rest
 df.Pri_Genres.head()
-
-rest = df.Genres.apply(lambda x: x.split(sep)[-1])
-rest.unique()
-df['Sec_Genres'] = rest
-df.Sec_Genres.head()
 
 df["Rating"] = df["Rating"].fillna(df.groupby("Pri_Genres")["Rating"].transform("mean"))
 df["Size"] = df["Size"].fillna(df.groupby("Pri_Genres")["Size"].transform("mean"))
