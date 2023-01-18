@@ -52,7 +52,7 @@ df.Installs=pd.to_numeric(df.Installs)
 
 df.Reviews.str.isnumeric().sum()
 df[~df.Reviews.str.isnumeric()]
-df=df.drop(df.index[10472])
+df.drop(df.index[10472], inplace = True)
 df.Reviews=pd.to_numeric(df.Reviews)
 
 print("Range: ", df.Rating.min(), "-", df.Rating.max())
