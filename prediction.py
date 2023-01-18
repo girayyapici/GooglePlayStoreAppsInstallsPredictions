@@ -57,11 +57,11 @@ X = df[features]
 y = df['Installs']
 ####
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-#label_encoder = LabelEncoder()
+label_encoder = LabelEncoder()
 #x_train['Species'] = label_encoder.fit_transform(x_train['Species'].values)
 #x_test['Species'] = label_encoder.transform(x_test['Species'].values)
 #save label encoder classes
-#np.save('classes.npy', label_encoder.classes_)
+np.save('classes.npy', label_encoder.classes_)
 
 # load model
 best_xgboost_model = xgb.XGBRegressor()
