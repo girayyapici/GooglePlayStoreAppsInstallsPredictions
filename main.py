@@ -26,7 +26,7 @@ import numpy as np
 
 st.header("Google Play Store Apps Installs Predictions")
 st.text_input("Enter your Name: ", key="name")
-df_ = pd.read_csv("https://github.com/girayyapici/GooglePlayStoreAppsInstallsPredictions/blob/485cf5bf90ca36a84fd7cecd68317f1bf152c667/googleplaystore.csv")
+df_ = pd.read_csv("https://https://raw.githubusercontent.com/girayyapici/GooglePlayStoreAppsInstallsPredictions/main/googleplaystore.csv")
 df=df_.copy()
 
 encoder = LabelEncoder()
