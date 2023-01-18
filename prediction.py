@@ -52,7 +52,7 @@ df["Installs_qcut"] = pd.cut(df["Installs"], [0, 10000, 1000000, 5000000, 100000
 le = preprocessing.LabelEncoder()
 df['Installs_qcut'] = le.fit_transform(df['Installs_qcut'])
 
-features = ['Reviews', 'Size', 'Rating', 'Type', 'Price', 'Content_Rating', 'Pri_Genres']
+features = ['Size', 'Type', 'Price', 'Content_Rating', 'Pri_Genres']
 X = df[features]
 y = df['Installs']
 ####
@@ -76,7 +76,7 @@ loaded_encoder.classes_ = np.load('classes.npy',allow_pickle=True)
 print(x_test.shape)
 input_species = loaded_encoder.transform(np.expand_dims("Parkki",-1))
 print(int(input_species))
-inputs = np.expand_dims([int(input_species),15,20,10,4,5,5,4],0)
+inputs = np.expand_dims([int(input_species),15,20,10,4,5,],0)
 print(inputs.shape)
 prediction = best_xgboost_model.predict(inputs)
 print("final pred", np.squeeze(prediction,-1))

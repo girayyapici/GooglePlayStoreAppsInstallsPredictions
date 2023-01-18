@@ -64,8 +64,9 @@ pd.set_option('display.width', 500)
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
 
 df = pd.read_csv("googleplaystore1.csv")
+df.describe().T
 
-features = ['Reviews', 'Size', 'Rating', 'Type', 'Price', 'Content_Rating', 'Pri_Genres']
+features = ['Size','Type', 'Price', 'Content_Rating', 'Pri_Genres']
 X = df[features]
 y = df['Installs']
 ####
