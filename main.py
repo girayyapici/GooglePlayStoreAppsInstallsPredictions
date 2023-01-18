@@ -41,7 +41,7 @@ best_xgboost_model = xgb.XGBRegressor()
 best_xgboost_model.load_model("best_model.json")
 
 input_Size = st.slider('Size', min(df["Size"]), max(df["Size"]), 0.0, 1.0)
-input_Type = st.slider('Type', min(df["Type"]), max(df["Type"]), 0.0, 1)
+input_Type = st.slider('Type', min(df["Type"]), max(df["Type"]), 0, 1)
 input_Price = st.slider('Price', min(df["Price"]), max(df["Price"]), 0.0, 1.0)
 input_Content_Rating = st.slider('Content_Rating', min(df["Content_Rating"]), max(df["Content_Rating"]), 0.0, 1.0)
 input_Pri_Genres = st.slider('Pri_Genres', min(df["Pri_Genres"]), max(df["Pri_Genres"]), 0.0, 1.0)
