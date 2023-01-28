@@ -65,15 +65,14 @@ pd.set_option('display.float_format', lambda x: '%.3f' % x)
 
 df = pd.read_csv("googleplaystore1.csv")
 df.describe().T
+df.head()
 
-features = ['Size','Type', 'Price', 'Content_Rating', 'Pri_Genres']
+features = ['Size','Type', 'Price', 'Content_Rating', 'Pri_Genres', 'App', 'Reviews', 'Last_Updated']
 X = df[features]
 y = df['Installs']
 ####
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-#label_encoder = LabelEncoder()
-#x_train['Species'] = label_encoder.fit_transform(x_train['Species'].values)
-#x_test['Species'] = label_encoder.transform(x_test['Species'].values)
+
 model_list = ["Decision_Tree", "Random_Forest", "XGboost_Regressor"]
 ####
 result_scores = []
@@ -84,8 +83,9 @@ for model in model_list:
 
 df_result_scores = pd.DataFrame(result_scores, columns=["model", "mse", "mae", "r2score"])
 df_result_scores
+
 ####
-num_estimator = [100, 150, 200, 250]
+num_estimator = [100, 150, 200, 250, 300, 350, 400]
 
 space = {'max_depth': hp.quniform("max_depth", 3, 18, 1),
          'gamma': hp.uniform('gamma', 1, 9),
@@ -116,7 +116,7 @@ best = fmin(fn=hyperparameter_tuning,
 
 print(best)
 ####
-best['max_depth'] = int(best['max_depth']) # convert to int
+best['max_depth'] = int(best['max_depth'])
 best["n_estimators"] = num_estimator[best["n_estimators"]] # assing n_estimator because it returs the index
 best_xgboost_model = xgb.XGBRegressor(**best)
 best_xgboost_model.fit(x_train, y_train)
@@ -125,5 +125,16 @@ score_MSE, score_MAE, score_r2score = evaluation_model(pred, y_test)
 to_append = ["XGboost_hyper_tuned",score_MSE, score_MAE, score_r2score]
 df_result_scores.loc[len(df_result_scores)] = to_append
 
+
 best_xgboost_model.save_model("best_model.json")
 ####
+#model çıktısı
+# best['max_depth'] = int(best['max_depth']) # convert to int
+# best["n_estimators"] = num_estimator[best["n_estimators"]] #assing value based on index
+# reg = xgb.XGBRegressor(**best)
+# reg.fit(x_train,y_train)
+# pred = reg.predict(x_test)
+# score_MSE, score_MAE, score_r2score = evaluation_model(pred,y_test)
+# to_append = ["XGboost_hyper_tuned",score_MSE, score_MAE, score_r2score]
+# df_result_scores.loc[len(df_result_scores)] = to_append
+# df_result_scores

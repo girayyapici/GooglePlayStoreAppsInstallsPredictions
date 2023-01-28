@@ -12,7 +12,8 @@
 # Last Updated: Son güncellenme Tarihi
 # Current Ver :
 # Android Ver :
-
+import time
+import datetime
 import pandas as pd
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
@@ -51,6 +52,10 @@ df['Type'] = le.fit_transform(df['Type'])
 df["Installs_qcut"] = pd.cut(df["Installs"], [0, 10000, 1000000, 5000000, 1000000000], labels=[1, 2, 3, 4])
 le = preprocessing.LabelEncoder()
 df['Installs_qcut'] = le.fit_transform(df['Installs_qcut'])
+
+df['Last_Updated'] = df['Last_Updated'].apply(lambda x : time.mktime(datetime.datetime.strptime(x, '%B %d, %Y').timetuple()))
+
+#df.to_csv('googleplaystore1.csv')
 
 features = ['Size', 'Type', 'Price', 'Content_Rating', 'Pri_Genres']
 X = df[features]
