@@ -57,7 +57,7 @@ df['Last_Updated'] = df['Last_Updated'].apply(lambda x : time.mktime(datetime.da
 
 #df.to_csv('googleplaystore1.csv')
 
-features = ['Size', 'Type', 'Price', 'Content_Rating', 'Pri_Genres']
+features = ['Size', 'Type', 'Price', 'Content_Rating', 'Pri_Genres' , 'App', 'Reviews', 'Last_Updated']
 X = df[features]
 y = df['Installs']
 ####
