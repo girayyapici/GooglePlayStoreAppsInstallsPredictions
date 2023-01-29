@@ -51,7 +51,7 @@ input_Last_Updated = st.slider('Last_Updated', min(df["Last_Updated"]), max(df["
 
 if st.button('Make Prediction'):
     inputs = np.expand_dims(
-       [input_Size, input_Type, input_Price, input_Content_Rating, input_Pri_Genres], 0)
+       [input_Size, input_Type, input_Price, input_Content_Rating, input_Pri_Genres, input_App, input_Reviews, input_Last_Updated], 0)
     prediction = best_xgboost_model.predict(inputs)
     print("final pred", np.squeeze(prediction, -1))
     st.write(f"Your app will get: {np.squeeze(prediction, -1)} downloads")
