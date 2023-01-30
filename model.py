@@ -85,7 +85,7 @@ df_result_scores = pd.DataFrame(result_scores, columns=["model", "mse", "mae", "
 df_result_scores
 
 ####
-num_estimator = [100, 150, 200, 250, 300]
+num_estimator = [100, 150, 200, 250, 300, 350, 400, 450]
 
 space = {'max_depth': hp.quniform("max_depth", 3, 18, 1),
          'gamma': hp.uniform('gamma', 1, 9),
