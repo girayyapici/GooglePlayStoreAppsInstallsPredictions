@@ -67,7 +67,7 @@ df = pd.read_csv("googleplaystore1.csv")
 df.describe().T
 df.head()
 
-features = ['Size','Type', 'Price', 'Content_Rating', 'Pri_Genres', 'App', 'Reviews', 'Last_Updated']
+features = ['Size','Type', 'Price', 'Content_Rating', 'Pri_Genres', 'App', 'Reviews', 'lastupdated']
 X = df[features]
 y = df['Installs']
 ####

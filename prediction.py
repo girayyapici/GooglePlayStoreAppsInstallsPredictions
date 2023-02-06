@@ -34,39 +34,18 @@ pd.set_option('display.float_format', lambda x: '%.3f' % x)
 df = pd.read_csv("googleplaystore1.csv")
 
 
-
-le = preprocessing.LabelEncoder()
-df['App'] = le.fit_transform(df['App'])
-
-le = preprocessing.LabelEncoder()
-df['Pri_Genres'] = le.fit_transform(df['Pri_Genres'])
-
-le = preprocessing.LabelEncoder()
-df['Content_Rating'] = le.fit_transform(df['Content_Rating'])
-
-#df['Type'] = pd.get_dummies(df['Type']) kontrol edilecek
-
-le = preprocessing.LabelEncoder()
-df['Type'] = le.fit_transform(df['Type'])
-
-df["Installs_qcut"] = pd.cut(df["Installs"], [0, 10000, 1000000, 5000000, 1000000000], labels=[1, 2, 3, 4])
-le = preprocessing.LabelEncoder()
-df['Installs_qcut'] = le.fit_transform(df['Installs_qcut'])
-
-df['Last_Updated'] = df['Last_Updated'].apply(lambda x : time.mktime(datetime.datetime.strptime(x, '%B %d, %Y').timetuple()))
-
 #df.to_csv('googleplaystore1.csv')
 
-features = ['Size', 'Type', 'Price', 'Content_Rating', 'Pri_Genres' , 'App', 'Reviews', 'Last_Updated']
+features = ['Size', 'Type', 'Price', 'Content_Rating', 'Pri_Genres', 'App', 'Reviews', 'lastupdated']
 X = df[features]
 y = df['Installs']
 ####
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-label_encoder = LabelEncoder()
+#label_encoder = LabelEncoder()
 #x_train['Species'] = label_encoder.fit_transform(x_train['Species'].values)
 #x_test['Species'] = label_encoder.transform(x_test['Species'].values)
-#save label encoder classes
-np.save('classes.npy', label_encoder.classes_)
+#ave label encoder classes
+#np.save('classes.npy', label_encoder.classes_)
 
 # load model
 best_xgboost_model = xgb.XGBRegressor()
@@ -76,7 +55,7 @@ score_MSE, score_MAE, score_r2score = evaluation_model(pred, y_test)
 print(score_MSE, score_MAE, score_r2score)
 ###
 loaded_encoder = LabelEncoder()
-loaded_encoder.classes_ = np.load('classes.npy',allow_pickle=True)
+loaded_encoder.classes_ = np.load('classes.npy', allow_pickle=True)
 
 print(x_test.shape)
 input_species = loaded_encoder.transform(np.expand_dims("Parkki",-1))
