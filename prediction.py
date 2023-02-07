@@ -58,7 +58,7 @@ loaded_encoder = LabelEncoder()
 loaded_encoder.classes_ = np.load('classes.npy', allow_pickle=True)
 
 print(x_test.shape)
-input_species = loaded_encoder.transform(np.expand_dims("Parkki",-1))
+input_species = loaded_encoder.transform(np.expand_dims("Parkki",0))
 print(int(input_species))
 inputs = np.expand_dims([int(input_species),15,20,10,4,5,],0)
 print(inputs.shape)
