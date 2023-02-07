@@ -65,7 +65,7 @@ pd.set_option('display.float_format', lambda x: '%.3f' % x)
 
 df = pd.read_csv("googleplaystore1.csv")
 df.describe().T
-df.head()
+df.head(30)
 
 features = ['Size','Type', 'Price', 'Content_Rating', 'Pri_Genres', 'App', 'Reviews', 'lastupdated']
 X = df[features]
@@ -85,7 +85,7 @@ df_result_scores = pd.DataFrame(result_scores, columns=["model", "mse", "mae", "
 df_result_scores
 
 ####
-num_estimator = [100, 150, 200, 250, 300, 350, 400, 450]
+num_estimator = [100, 150, 200, 250]
 
 space = {'max_depth': hp.quniform("max_depth", 3, 18, 1),
          'gamma': hp.uniform('gamma', 1, 9),
@@ -128,7 +128,7 @@ df_result_scores.loc[len(df_result_scores)] = to_append
 
 best_xgboost_model.save_model("best_model.json")
 ####
-#model çıktısı
+# #model çıktısı
 # best['max_depth'] = int(best['max_depth']) # convert to int
 # best["n_estimators"] = num_estimator[best["n_estimators"]] #assing value based on index
 # reg = xgb.XGBRegressor(**best)
