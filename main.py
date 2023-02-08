@@ -46,8 +46,8 @@ input_Price = st.slider('Price', min(df["Price"]), max(df["Price"]), 0.0, 1.0)
 input_Content_Rating = st.slider('Content_Rating', min(df["Content_Rating"]), max(df["Content_Rating"]), 0, 1)
 input_Pri_Genres = st.slider('Pri_Genres', min(df["Pri_Genres"]), max(df["Pri_Genres"]), 0, 1)
 input_App = st.slider('App', min(df["App"]), max(df["App"]), 0, 1)
-input_Reviews = st.slider('Reviews', 0, 5, 0, 1)
-input_Last_Updated = st.slider('lastupdated', 0, 5, 0, 1)
+input_Reviews = st.slider('Reviews', min(df["Reviews"]), max(df["Reviews"]), 0, 1)
+input_Last_Updated = st.slider('lastupdated', min(df["lastupdated"]), max(df["lastupdated"]), 0, 1)
 
 if st.button('Make Prediction'):
     inputs = np.expand_dims(

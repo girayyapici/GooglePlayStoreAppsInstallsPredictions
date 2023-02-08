@@ -63,5 +63,5 @@ loaded_encoder.classes_ = np.load('classes.npy', allow_pickle=True)
 # a = [input_Size, input_Type, input_Price, input_Content_Rating, input_Pri_Genres, input_App, input_Reviews, input_Last_Updated]
 # inputs = np.expand_dims([int(a)],0)
 # print(inputs.shape)
-# prediction = best_xgboost_model.predict(inputs)
+#prediction = best_xgboost_model.predict(inputs)
 # print("final pred", np.squeeze(prediction,-1))
